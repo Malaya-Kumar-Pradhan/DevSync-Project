@@ -1,0 +1,26 @@
+services:
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    env_file:                 # <-- Changed from 'environment:'
+      - ./backend/.env 
+    networks:
+      - devsync-network
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173" 
+    depends_on:
+      - backend
+    networks:
+      - devsync-network
+
+networks:
+  devsync-network:
+    driver: bridge
