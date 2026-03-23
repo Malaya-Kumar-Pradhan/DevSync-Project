@@ -18,7 +18,6 @@ DevSync is a modern, full-stack application that leverages the power of Google's
 * React + Vite
 * Tailwind CSS
 * Monaco Editor (`@monaco-editor/react`)
-* React Markdown
 
 **Backend:**
 * Node.js + Express
