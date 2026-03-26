@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    env_file:                 # <-- Changed from 'environment:'
+    env_file:                 
       - ./backend/.env 
     networks:
       - devsync-network

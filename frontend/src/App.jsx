@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import Editor from '@monaco-editor/react';
-import ReactMarkdown from 'react-markdown';
+import { useState } from 'react';
+import EditorPane from './components/EditorPane';
+import AuditReport from './components/AuditReport';
+import RunButton from './components/RunButton';
 
 function App() {
   const [code, setCode] = useState('// Paste your code here...');
@@ -18,7 +19,7 @@ function App() {
       });
       const data = await response.json();
       setReview(data.review);
-    } catch (error) {
+    } catch {
       setReview("Error connecting to the audit server.");
     } finally {
       setLoading(false);
@@ -29,35 +30,12 @@ function App() {
     <div className="flex h-screen bg-gray-900 text-white p-4">
       <div className="w-1/2 pr-2 flex flex-col">
         <h2 className="text-xl font-bold mb-2">DevSync Editor</h2>
-        <div className="flex-grow border border-gray-700 rounded overflow-hidden">
-          <Editor
-            height="100%"
-            defaultLanguage="javascript"
-            theme="vs-dark"
-            value={code}
-            onChange={(value) => setCode(value)}
-          />
-        </div>
-        <button 
-          onClick={handleReview} 
-          disabled={loading}
-          className="mt-4 bg-blue-600 hover:bg-blue-700 p-2 rounded font-bold"
-        >
-          {loading ? 'Analyzing...' : 'Run Security & Performance Audit'}
-        </button>
+        <EditorPane code={code} setCode={setCode} />
+        <RunButton loading={loading} handleReview={handleReview} />
       </div>
-      
       <div className="w-1/2 pl-2 flex flex-col">
         <h2 className="text-xl font-bold mb-2">AI Audit Report</h2>
-        <div className="flex-grow bg-gray-800 border border-gray-700 rounded p-4 overflow-y-auto whitespace-pre-wrap">
-          {review ? (
-            <ReactMarkdown>
-              {String(review)}
-            </ReactMarkdown>
-          ) : (
-            "Awaiting code submission..."
-          )}
-        </div>
+        <AuditReport review={review} />
       </div>
     </div>
   );
