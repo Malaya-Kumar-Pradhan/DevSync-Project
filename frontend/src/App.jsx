@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Editor from '@monaco-editor/react';
+import ReactMarkdown from 'react-markdown';
 
 function App() {
   const [code, setCode] = useState('// Paste your code here...');
@@ -49,7 +50,13 @@ function App() {
       <div className="w-1/2 pl-2 flex flex-col">
         <h2 className="text-xl font-bold mb-2">AI Audit Report</h2>
         <div className="flex-grow bg-gray-800 border border-gray-700 rounded p-4 overflow-y-auto whitespace-pre-wrap">
-          {review || "Awaiting code submission..."}
+          {review ? (
+            <ReactMarkdown>
+              {String(review)}
+            </ReactMarkdown>
+          ) : (
+            "Awaiting code submission..."
+          )}
         </div>
       </div>
     </div>
